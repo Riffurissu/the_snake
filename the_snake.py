@@ -42,6 +42,7 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject():
     """Базовый класс"""
+
     def __init__(self, position=None):
         """Конструктор"""
         self.position = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
@@ -54,6 +55,7 @@ class GameObject():
 
 class Apple(GameObject):
     """Класс яблока"""
+
     def __init__(self, body_color=(255, 0, 0), position=None):
         """Конструктор"""
         super().__init__(self.randomize_position())
@@ -72,8 +74,10 @@ class Apple(GameObject):
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
+
 class Snake(GameObject):
     """Класс змеи"""
+    
     def __init__(self, body_color=(0, 255, 0)):
         """Конструктор"""
         self.position = None
