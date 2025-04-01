@@ -43,9 +43,9 @@ clock = pygame.time.Clock()
 class GameObject():
     """Базовый класс"""
 
-    def __init__(self, position=None):
+    def __init__(self, position=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)):
         """Конструктор"""
-        self.position = SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2
+        self.position = position
         self.body_color = None
 
     def draw(self):
@@ -61,12 +61,13 @@ class Apple(GameObject):
         super().__init__(self.randomize_position())
         self.body_color = body_color
 
-    def randomize_position(self):
+    def randomize_position(self, snake_pos=[]):
         """Метод позиции"""
         offset = randint(0, 0)
-        width = [x for x in range(offset, SCREEN_WIDTH, 20)]
-        height = [x for x in range(offset, SCREEN_HEIGHT, 20)]
-        return (choice(width), choice(height))
+        possible_pos = [(x, y) for x in range(offset, SCREEN_WIDTH, GRID_SIZE) 
+                            for y in range(offset, SCREEN_HEIGHT, GRID_SIZE)]
+        possible_pos = [pos for pos in possible_pos if pos not in snake_pos]
+        return choice(possible_pos)
 
     def draw(self):
         """Метод отрисовки"""
@@ -147,9 +148,7 @@ class Snake(GameObject):
     def reset(self):
         """Метод сброс к началу игры"""
         self.length = 2
-        self.positions = [self.randomize_position()]
-        self.direction = (1, 0)
-        self.next_direction = None
+        self.positions = [self.positions[0]]
         self.last = None
 
 
@@ -187,7 +186,7 @@ def main():
 
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            apple.position = apple.randomize_position()
+            apple.position = apple.randomize_position(snake.positions)
 
         snake.draw()
         apple.draw()
