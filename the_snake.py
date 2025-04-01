@@ -64,8 +64,9 @@ class Apple(GameObject):
     def randomize_position(self, snake_pos=[]):
         """Метод позиции"""
         offset = randint(0, 0)
-        possible_pos = [(x, y) for x in range(offset, SCREEN_WIDTH, GRID_SIZE) 
-                            for y in range(offset, SCREEN_HEIGHT, GRID_SIZE)]
+        x_axis = [x for x in range(offset, SCREEN_WIDTH, GRID_SIZE)]
+        y_axis = [y for y in range(offset, SCREEN_HEIGHT, GRID_SIZE)]
+        possible_pos = [(x, y) for x in x_axis for y in y_axis]
         possible_pos = [pos for pos in possible_pos if pos not in snake_pos]
         return choice(possible_pos)
 
