@@ -77,7 +77,7 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """Класс змеи"""
-    
+
     def __init__(self, body_color=(0, 255, 0)):
         """Конструктор"""
         self.position = None
